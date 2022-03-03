@@ -16,16 +16,23 @@ public class ThirdPersonCamera : MonoBehaviour
 
     private bool _canRotate;
     
-    public Vector3 GetForwardVector()
+    public Vector3 GetForward()
     {
         var forward = transform.forward;
         return new Vector3(forward.x, 0, forward.z).normalized;
+    }
+
+    public Vector3 GetRight()
+    {
+        var right = transform.right;
+        return new Vector3(right.x, 0, right.z).normalized;
     }
     
     private void Start()
     {
         _pitch = Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg;
         _yaw = 0;
+        _canRotate = false;
     }
 
 
