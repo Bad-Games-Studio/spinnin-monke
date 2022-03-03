@@ -8,9 +8,19 @@ public class ThirdPersonCamera : MonoBehaviour
     
     public Vector2 offset;
 
+    public float mouseSensitivity;
+
 
     private float _pitch;
     private float _yaw;
+
+    private bool _canRotate;
+    
+    public Vector3 GetForwardVector()
+    {
+        var forward = transform.forward;
+        return new Vector3(forward.x, 0, forward.z).normalized;
+    }
     
     private void Start()
     {
@@ -21,10 +31,49 @@ public class ThirdPersonCamera : MonoBehaviour
 
     private void LateUpdate()
     {
+        HandleFire2Button();
         UpdateRotation();
         UpdatePosition();
     }
 
+    private void HandleFire2Button()
+    {
+        if (Input.GetButtonDown("Fire2"))
+        {
+            EnableRotation();
+        }
+
+        if (Input.GetButtonUp("Fire2"))
+        {
+            DisableRotation();
+        }
+    }
+    
+    private void EnableRotation()
+    {
+        _canRotate = true;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+    
+    private void DisableRotation()
+    {
+        _canRotate = false;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+    
+    private void UpdateRotation()
+    {
+        if (_canRotate)
+        {
+            var rotationAngle = Input.GetAxis("Mouse X") * mouseSensitivity;
+            _yaw += rotationAngle;
+        }
+
+        transform.rotation = Quaternion.Euler(_pitch, _yaw, 0);
+    }
+    
     private void UpdatePosition()
     {
         var direction = GetHorizontalDirection();
@@ -42,15 +91,7 @@ public class ThirdPersonCamera : MonoBehaviour
             Mathf.Sin(angle),
             0,
             Mathf.Cos(angle));
-        Debug.Log(transform.forward);
-        
+
         return direction.normalized;
-    }
-
-    private void UpdateRotation()
-    {
-        _yaw += 0.1f;
-
-        transform.rotation = Quaternion.Euler(_pitch, _yaw, 0);
     }
 }

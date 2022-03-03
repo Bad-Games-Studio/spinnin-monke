@@ -405,6 +405,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 438764337}
   offset: {x: 7.5, y: 7}
+  mouseSensitivity: 3
 --- !u!1001 &2077124831
 PrefabInstance:
   m_ObjectHideFlags: 0
