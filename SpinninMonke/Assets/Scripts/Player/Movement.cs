@@ -43,8 +43,8 @@ namespace Player
 
         private Vector3 GetMovementDirection()
         {
-            var forward = Input.GetAxis("Horizontal") * _camera.GetForward();
-            var right   = Input.GetAxis("Vertical")   * _camera.GetRight();
+            var forward = Input.GetAxis("Vertical")   * _camera.GetForward();
+            var right   = Input.GetAxis("Horizontal") * _camera.GetRight();
             
             var movementDirection = forward + right;
             return movementDirection.magnitude > 1 ?
